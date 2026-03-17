@@ -3,7 +3,7 @@ description: "MVE domain knowledge and coaching conventions for the Experiment D
 applyTo: '**/.copilot-tracking/mve/**'
 ---
 
-# Experiment Designer — MVE Knowledge Base
+# Experiment Designer: MVE Knowledge Base
 
 Domain knowledge and coaching conventions for Minimum Viable Experimentation (MVE) workflows. These instructions apply automatically when working with MVE session artifacts and guide the Experiment Designer agent through structured experiment design.
 
@@ -143,7 +143,8 @@ All MVE session artifacts live under a structured tracking directory:
 ├── hypotheses.md        # Testable hypotheses with priority ranking
 ├── vetting.md           # Vetting results and red flag assessment
 ├── experiment-design.md # Approach, scope, timeline, resources, success criteria
-└── mve-plan.md          # Consolidated MVE plan document
+├── mve-plan.md          # Consolidated MVE plan document
+└── backlog-brief.md     # Requirements bridge for backlog manager consumption (optional)
 ```
 
 * `context.md` captures the problem statement, customer background, and business justification. This file establishes why the experiment matters and what decision it informs.
@@ -151,8 +152,112 @@ All MVE session artifacts live under a structured tracking directory:
 * `vetting.md` records the results of applying vetting criteria and the red flag checklist. Document which criteria pass, which raise concerns, and any mitigations.
 * `experiment-design.md` defines the technical approach, scope boundaries, timeline estimate, required resources, and success criteria. This file translates hypotheses into an actionable experiment plan.
 * `mve-plan.md` consolidates findings from all other artifacts into a single plan document suitable for stakeholder review and approval.
+* `backlog-brief.md` reformats experiment hypotheses and success criteria into requirements language for consumption by ADO or GitHub backlog manager agents. This artifact is optional and produced only during Phase 6 when the user wants to transition the experiment into backlog work items.
 
 Include `<!-- markdownlint-disable-file -->` at the top of all markdown files created under `.copilot-tracking/`.
+
+## Backlog Brief Template
+
+Use this template when generating `backlog-brief.md` during Phase 6. Each requirement maps one hypothesis from the MVE plan into acceptance-criteria format suitable for backlog manager consumption.
+
+```text
+<!-- markdownlint-disable-file -->
+
+# Backlog Brief: {experiment-name}
+
+## Summary
+
+{2-3 sentence overview derived from problem statement and primary hypothesis}
+
+## Source Experiment
+
+* **MVE Plan**: .copilot-tracking/mve/{date}/{name}/mve-plan.md
+* **Experiment Type**: {type from Phase 4}
+* **Timeline**: {scope from Phase 4}
+
+## Requirements
+
+### REQ-001: {requirement title derived from hypothesis H1}
+
+{Success criteria for H1 reframed as acceptance criteria}
+
+* Priority: {from hypothesis priority ranking}
+* Acceptance Criteria:
+  * {criterion 1}
+  * {criterion 2}
+
+### REQ-002: {requirement title derived from hypothesis H2}
+
+{Success criteria for H2 reframed as acceptance criteria}
+
+* Priority: {from hypothesis priority ranking}
+* Acceptance Criteria:
+  * {criterion 1}
+  * {criterion 2}
+
+## Dependencies and Resources
+
+{Mapped from experiment design resource requirements}
+
+## Out of Scope
+
+{Items explicitly excluded from the experiment to prevent scope expansion during backlog planning}
+
+## Suggested Labels
+
+experiment, mve, {experiment-type-1}, {experiment-type-2}
+```
+
+### Template Field Guidance
+
+* **Summary**: Synthesize from Phase 1 problem statement and Phase 2 primary hypothesis. Write as a requirements overview, not an experiment description.
+* **Source Experiment**: Link back to the `mve-plan.md` so backlog managers can trace requirements to their origin.
+* **Requirements**: One `REQ-NNN` section per hypothesis. The hypothesis assumption becomes the requirement description. Success criteria from Phase 4 become acceptance criteria. Priority carries from Phase 2 ranking.
+* **Dependencies and Resources**: Map directly from Phase 4 experiment design resource requirements.
+* **Out of Scope**: Preserve experiment scope boundaries to prevent backlog planning from exceeding the experiment's validated scope.
+* **Suggested Labels**: Include `experiment` and `mve` as baseline labels. Add each experiment type from Phase 4 as a separate label (e.g., `data-feasibility`, `llm-feasibility`). Omit unused type placeholders.
+
+## Backlog Bridge Usage Guide
+
+Phase 6 (Backlog Bridge) converts completed experiment outputs into requirements language for backlog managers. Use this phase when a validated experiment should transition into planned work items.
+
+### When to Use
+
+Invoke Phase 6 after completing Phase 5 (MVE Plan) when:
+
+* The experiment produced validated hypotheses ready for development planning.
+* Work items need to be created in ADO or GitHub from the experiment findings.
+
+Do not invoke Phase 6 for experiments that are still in progress or produced inconclusive results.
+
+### Inputs and Outputs
+
+* **Input**: Completed `mve-plan.md` from the session tracking directory.
+* **Output**: `backlog-brief.md` written to the same session tracking directory.
+
+### Handoff to Backlog Managers
+
+After generating `backlog-brief.md`, provide it to the appropriate backlog manager agent:
+
+* **ADO work items**: Invoke the ADO Backlog Manager agent and pass `backlog-brief.md` as the input document. The agent consumes it via Discovery Path B.
+* **GitHub issues**: Invoke the GitHub Backlog Manager agent and pass `backlog-brief.md` as the input document. The agent consumes it via Discovery Path B.
+
+The backlog brief is a bridge document: the backlog manager applies its own platform-specific conventions for titles, labels, sizing, and hierarchy.
+
+## Backlog Bridge Example
+
+End-to-end walkthrough from experiment completion to backlog item creation:
+
+1. Complete Phases 1–5 of the Experiment Designer, producing `mve-plan.md`.
+2. Tell the agent you want to create backlog items from the experiment (Phase 6 triggers).
+3. The agent reviews `mve-plan.md` and generates `backlog-brief.md` with:
+   * Each hypothesis mapped to a REQ-NNN requirement.
+   * Success criteria converted to acceptance criteria.
+   * Dependencies and out-of-scope items preserved.
+4. Review the generated `backlog-brief.md` and confirm it is accurate.
+5. Open the ADO or GitHub Backlog Manager agent.
+6. Provide `backlog-brief.md` as the input document.
+7. The backlog manager's Discovery Path B consumes the brief and produces platform-specific work items. Refer to the backlog manager agent's documentation for output format details.
 
 ## Experiment Design Best Practices
 

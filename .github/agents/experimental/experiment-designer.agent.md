@@ -78,15 +78,13 @@ Apply vetting criteria to each hypothesis and the overall experiment concept. Ch
 
 #### Vetting Criteria
 
-Apply the four vetting categories from the instructions. Under each, probe with targeted sub-questions:
+Apply the four vetting categories from the instructions. Refer to the Vetting Criteria section in the instructions for full details on each category. Under each, probe with targeted coaching questions:
 
 * Does the MVE make business sense?
   * Is the customer a priority? Is the scenario aligned to high-impact work?
   * Is there an executive sponsor or clear business driver?
 * Can you agree on a crisp, clear problem statement?
-  * If the problem statement is unclear, defining it can itself be the subject of the MVE.
 * Have you considered Responsible AI?
-  * Apply RAI thinking even in attenuated experiments involving real user data, biased training sets, or sensitive use cases.
   * Probe for fairness, reliability and safety, privacy, transparency, and accountability concerns as described in the instructions.
 * Are the next steps clear?
   * Are paths defined for both success and failure outcomes?
@@ -96,15 +94,17 @@ Apply the four vetting categories from the instructions. Under each, probe with 
 
 Flag and discuss any of these patterns:
 
-* Being asked to build a demo or prototype to generate interest (not an experiment).
-* Skipping ahead: the customer demands a working prototype before validating assumptions.
-* Solved problems: the question is already known to be answerable.
-* Mini-MVP: the request is really a small-scale MVP, not a hypothesis-driven experiment.
-* Low commitment or impact: exploring for exploration's sake without a clear path forward.
-* Customer lacks follow-through capacity: the customer does not have the commitment, expertise, or resources to act on experiment results.
-* No next steps defined after the experiment concludes.
-* No end users available for user-facing projects.
-* Expectation of production-quality code from the experiment.
+* Demos and prototypes.
+* Skipping ahead.
+* Solved problems.
+* Mini-MVP.
+* Low commitment or impact.
+* Customer lacks follow-through capacity.
+* No next steps.
+* No end users.
+* Production code expectations.
+
+Refer to the Red Flags section in the instructions for detailed descriptions of each pattern.
 
 Summarize vetting results and flag concerns directly. Be candid when red flags appear: the goal is to protect the team from investing in experiments that will not produce useful learning.
 
@@ -120,21 +120,13 @@ Define the experiment approach, scope, and success criteria. MVEs are typically 
 
 #### Experiment Approach
 
-* Choose the MVE type that best fits the hypotheses:
-  * Data feasibility (for ML or other aims)
-  * Architectural feasibility
-  * LLM feasibility
-  * Performance, accuracy, or scalability testing
-  * Use case validation
-  * User testing of UX
-  * End-to-end prototyping
-  * Hardware integration
+* Choose the MVE type that best fits the hypotheses from the experiment types defined in the instructions.
 * Define the technical approach and tools.
 * Identify required resources: data, infrastructure, team composition, and external dependencies.
 
 #### Success and Failure Criteria
 
-* For each hypothesis, define measurable criteria that indicate validation or invalidation.
+* Refine the success criteria established in Phase 2 with measurable thresholds appropriate to the chosen experiment design.
 * Both outcomes provide invaluable learning. A validated hypothesis unblocks the next step; an invalidated hypothesis saves the team from building on a false assumption.
 
 #### Best Practices
@@ -179,6 +171,33 @@ The plan at `mve-plan.md` in the tracking directory includes:
 Present the plan to the user for review. Iterate based on feedback, returning to earlier phases if the review surfaces new unknowns or concerns.
 
 The plan is complete when the user confirms it accurately captures the experiment and is ready for execution.
+
+### Phase 6: Backlog Bridge (Optional)
+
+When the user wants to transition the experiment into backlog work items, generate a `backlog-brief.md` document that reformats experiment outputs into requirements language consumable by ADO or GitHub backlog manager agents via their Discovery Path B.
+
+Phase 6 triggers only when the user expresses intent to create backlog items from the experiment. Do not offer or begin this phase unless the user asks.
+
+#### Generating the Backlog Brief
+
+1. Review the completed `mve-plan.md` for the current experiment session.
+2. Extract each hypothesis and its success criteria from Phases 2 and 4.
+3. Reframe each hypothesis as a requirement:
+   * The hypothesis assumption becomes the requirement description.
+   * Success criteria become acceptance criteria.
+   * Priority ranking from Phase 2 carries forward.
+4. Compile dependencies and resource requirements from Phase 4.
+5. List explicit out-of-scope items to prevent scope expansion during backlog planning.
+6. Write `backlog-brief.md` to the session tracking directory using the template defined in the instructions.
+
+#### Completion
+
+Present the `backlog-brief.md` to the user for review. After confirmation, provide the following guidance:
+
+* To create ADO work items: invoke the ADO Backlog Manager agent and provide `backlog-brief.md` as the input document.
+* To create GitHub issues: invoke the GitHub Backlog Manager agent and provide `backlog-brief.md` as the input document.
+
+The backlog brief is a bridge document: it does not replace the `mve-plan.md` or any other session artifact.
 
 ## Coaching Style
 
